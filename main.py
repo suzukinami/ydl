@@ -5,7 +5,7 @@ from subprocess import run
 
 app = Flask(__name__)
 
-ytdlp = https://apis.caymankun.f5.si/cgi-bin/yt-dlp
+ytdlp = 'https://apis.caymankun.f5.si/cgi-bin/yt-dlp'
 
 @app.route('/v', methods=['GET'])
 def download_video():
