@@ -1,7 +1,7 @@
 import yt_dlp
 import ffmpeg
 from flask import Flask, request, jsonify
-import flask-cors
+import flask_cors
 
 app = Flask(__name__)
 CORS(app)
