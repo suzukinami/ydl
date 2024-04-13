@@ -17,13 +17,13 @@ def download_file(url, save_path):
         return False
 
 # yt-dlpをダウンロードして実行
-yt_dlp_url = "https://apis.caymankun.f5.si/cgi-bin/yt-dlp"
+yt_dlp_url = "https://apis.caymankun.f5.si/bin/yt-dlp"
 yt_dlp_path = "/tmp/yt-dlp"
 if download_file(yt_dlp_url, yt_dlp_path):
     os.chmod(yt_dlp_path, 0o755)  # ダウンロードしたファイルを実行可能にする
 
 # ffmpegをダウンロードして実行
-ffmpeg_url = "https://apis.caymankun.f5.si/cgi-bin/ffmpeg"
+ffmpeg_url = "https://apis.caymankun.f5.si/bin/ffmpeg"
 ffmpeg_path = "/tmp/ffmpeg"
 if download_file(ffmpeg_url, ffmpeg_path):
     os.chmod(ffmpeg_path, 0o755)  # ダウンロードしたファイルを実行可能にする
