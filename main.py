@@ -10,12 +10,12 @@ CORS(app)
 def download_video():
     url = request.args.get('url')
     if url:
-        ydl_opts = {
+         ydl_opts = {
             'format': 'best',
             'embed_thumbnail': True,
             'postprocessors': [{
                 'key': 'EmbedThumbnail',
-                'ffmpeg_o': '-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"'
+                'ffmpeg_args': '-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"'
             }]
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -37,7 +37,7 @@ def download_audio():
             'embed_thumbnail': True,
             'postprocessors': [{
                 'key': 'EmbedThumbnail',
-                'ffmpeg_o': '-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"'
+                'ffmpeg_args': '-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"'
             }]
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
