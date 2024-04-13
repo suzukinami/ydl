@@ -1,6 +1,6 @@
-import yt_dlp
 import ffmpeg
-from flask import Flask, request, jsonify
+import yt_dlp
+from flask import Flask, request, send_file
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -22,6 +22,7 @@ def download_video():
             result = ydl.extract_info(url, download=False)
             if 'url' in result:
                 media_url = result['url']
+                # ファイルを直接返す
                 return send_file(media_url, as_attachment=True)
             else:
                 return 'URL not found in result', 500
@@ -44,6 +45,7 @@ def download_audio():
             result = ydl.extract_info(url, download=False)
             if 'url' in result:
                 media_url = result['url']
+                # ファイルを直接返す
                 return send_file(media_url, as_attachment=True)
             else:
                 return 'URL not found in result', 500
