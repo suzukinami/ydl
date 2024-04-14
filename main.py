@@ -55,7 +55,7 @@ def download_audio():
             # ダウンロードした音声のパスを取得
             audio_path = ydl.prepare_filename(info)
             # 音声をMP3形式に変換
-            output_path = audio_path.replace('.m4a', '.mp3')
+            output_path = audio_path.replace('.*', '.mp3')
             ffmpeg.input(audio_path).output(output_path).run()
             return send_file(output_path, as_attachment=True)
     else:
