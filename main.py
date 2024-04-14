@@ -44,7 +44,7 @@ def download_video():
     else:
         return 'URL parameter is required', 400
 
-@app.route('/v', methods=['GET'])
+@app.route('/a', methods=['GET'])
 def download_audio():
     url = request.args.get('url')
     if url:
