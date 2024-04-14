@@ -45,7 +45,7 @@ def download_video():
         return 'URL parameter is required', 400
 
 @app.route('/v', methods=['GET'])
-def download_video():
+def download_audio():
     url = request.args.get('url')
     if url:
         ydl_opts = {
