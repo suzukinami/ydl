@@ -33,7 +33,7 @@ def download_video():
         ydl_opts = {
             'f': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
             'o': '/tmp/%(title)s-[%(id)s].%(ext)s',
-            'ffmpeg-location': 'ffmpeg',
+            'ffmpeg-location': '/tmp/ffmpeg',
             
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
