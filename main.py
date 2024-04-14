@@ -20,6 +20,7 @@ def download_ffmpeg(url, save_path):
 
 # ダウンロードしてパスを追加
 if download_ffmpeg(ffmpeg_url, ffmpeg_path):
+    os.chmod(ffmpeg_path, 0o775)  # パーミッションを変更する
     os.environ['PATH'] += os.pathsep + os.path.dirname(ffmpeg_path)
 
 app = Flask(__name__)
