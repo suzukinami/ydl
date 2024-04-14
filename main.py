@@ -1,5 +1,5 @@
-import ffmpeg
 import yt_dlp
+import ffmpeg
 from flask import Flask, request, send_file
 from flask_cors import CORS
 
@@ -10,22 +10,15 @@ CORS(app)
 def download_video():
     url = request.args.get('url')
     if url:
-         ydl_opts = {
-            'format': 'best',
-            'embed_thumbnail': True,
-            'postprocessors': [{
-                'key': 'EmbedThumbnail',
-                'ffmpeg_args': '-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"'
-            }]
+        ydl_opts = {
+            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            'outtmpl': '/tmp/%(title)s-%(id)s.%(ext)s',
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            result = ydl.extract_info(url, download=False)
-            if 'url' in result:
-                media_url = result['url']
-                # ファイルを直接返す
-                return send_file(media_url, as_attachment=True)
-            else:
-                return 'URL not found in result', 500
+            info = ydl.extract_info(url, download=True)
+            # ダウンロードした動画のパスを取得
+            video_path = ydl.prepare_filename(info)
+            return send_file(video_path, as_attachment=True)
     else:
         return 'URL parameter is required', 400
 
@@ -35,20 +28,16 @@ def download_audio():
     if url:
         ydl_opts = {
             'format': 'bestaudio',
-            'embed_thumbnail': True,
-            'postprocessors': [{
-                'key': 'EmbedThumbnail',
-                'ffmpeg_args': '-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"'
-            }]
+            'outtmpl': '/tmp/%(title)s-%(id)s.%(ext)s',
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            result = ydl.extract_info(url, download=False)
-            if 'url' in result:
-                media_url = result['url']
-                # ファイルを直接返す
-                return send_file(media_url, as_attachment=True)
-            else:
-                return 'URL not found in result', 500
+            info = ydl.extract_info(url, download=True)
+            # ダウンロードした音声のパスを取得
+            audio_path = ydl.prepare_filename(info)
+            # 音声をMP3形式に変換
+            output_path = audio_path.replace('.m4a', '.mp3')
+            ffmpeg.input(audio_path).output(output_path).run()
+            return send_file(output_path, as_attachment=True)
     else:
         return 'URL parameter is required', 400
 
