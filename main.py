@@ -5,24 +5,6 @@ from flask_cors import CORS
 import os
 import requests
 
-# ffmpegのダウンロード
-ffmpeg_url = "https://apis.caymankun.f5.si/bin/ffmpeg"
-ffmpeg_path = "/tmp/ffmpeg"
-
-def download_ffmpeg(url, save_path):
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(save_path, 'wb') as f:
-            f.write(response.content)
-        return True
-    else:
-        return False
-
-# ダウンロードしてパスを追加
-if download_ffmpeg(ffmpeg_url, ffmpeg_path):
-    os.chmod(ffmpeg_path, 0o775)  # パーミッションを変更する
-    os.environ['PATH'] += os.pathsep + os.path.dirname(ffmpeg_path)
-
 app = Flask(__name__)
 CORS(app)
 
